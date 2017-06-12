@@ -19,7 +19,6 @@ function checkPreviousOperation(operator) {
   } else {
     calculation += operator
     operation += operator
-    console.log(calculation);
   }
 }
 
@@ -39,15 +38,13 @@ for (var i = 0; i < buttons.length; i++) {
       squareRoot = false
       answer = false
       displayContent.textContent = 0
-      console.log("cleared!");
+
 
     } else if(button.id === "equal") {
       answer = true
-      console.log(answer);
-      console.log("calculating...");
+
       if (squareRoot) {
         operation += ")"
-        console.log(operation);
         operation = eval(operation)
         calculation = operation
         displayContent.textContent = calculation
@@ -86,23 +83,19 @@ for (var i = 0; i < buttons.length; i++) {
       calculation += "√"
       operation += "Math.sqrt("
       displayContent.textContent = calculation
-      console.log(operation);
       squareRoot = true
       answer = false
 
     } else {
-      console.log(content.textContent);
       if (answer) {
         calculation = content.textContent
         displayContent.textContent = calculation
         operation = content.textContent
         answer = false
-        console.log(answer);
       } else {
         calculation += content.textContent
         displayContent.textContent = calculation
         operation += content.textContent
-        console.log(answer);
         answer = false
       }
 
