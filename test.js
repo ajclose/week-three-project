@@ -1,6 +1,7 @@
 let calculation = ''
-let operation = []
+let operation = ''
 let answer = false
+let squareRoot = false
 const buttons = document.querySelectorAll('.button')
 const display = document.querySelector('.display')
 let displayContent = display.querySelector('h1')
@@ -12,9 +13,12 @@ function checkPreviousOperation(operator) {
     calculation[calculation.length-1] = operator
     calculation = calculation.join('')
   } else if (operator === "√") {
-    calculation += "Math.sqrt("
+    calculation += "√"
+    operation += "Math.sqrt("
+    squareRoot = true;
   } else {
     calculation += operator
+    operation += operator
     console.log(calculation);
   }
 }
@@ -31,12 +35,24 @@ for (var i = 0; i < buttons.length; i++) {
   button.addEventListener('click', function(event) {
     if(button.id === "clear") {
       calculation = ''
+      operation = ''
+      squareRoot = false
+      answer = false
       displayContent.textContent = 0
       console.log("cleared!");
+
     } else if(button.id === "equal") {
       answer = true
       console.log(answer);
       console.log("calculating...");
+      if (squareRoot) {
+        operation += ")"
+        console.log(operation);
+        operation = eval(operation)
+        calculation = operation
+        displayContent.textContent = calculation
+        squareRoot = false
+      }
 
       if((eval(calculation)%1).toString().length>4) {
         calculation = (eval(calculation)).toFixed(4)
@@ -67,8 +83,11 @@ for (var i = 0; i < buttons.length; i++) {
       displayContent.textContent = calculation
       answer = false
     } else if (button.id === "square-root") {
-      checkPreviousOperation("√")
+      calculation += "√"
+      operation += "Math.sqrt("
       displayContent.textContent = calculation
+      console.log(operation);
+      squareRoot = true
       answer = false
 
     } else {
@@ -76,11 +95,13 @@ for (var i = 0; i < buttons.length; i++) {
       if (answer) {
         calculation = content.textContent
         displayContent.textContent = calculation
+        operation = content.textContent
         answer = false
         console.log(answer);
       } else {
         calculation += content.textContent
         displayContent.textContent = calculation
+        operation += content.textContent
         console.log(answer);
         answer = false
       }
